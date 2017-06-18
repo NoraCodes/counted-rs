@@ -156,8 +156,17 @@ fn main() {
 
     let records: Vec<Record> = serde_json::from_reader(Cursor::new(&buffer)).unwrap();
 
-    for record in records {
-        println!("{}, {}yo {} {} in {}, {}", record.name, record.age, record.race, record.sex, record.city, record.state)
+    if matches.is_present("csv") {
+        println!("name,address,age,armed,cause,city,state,day,month,year,race,sex");
+        for record in records {
+            println!("{},{},{},{},{},{},{},{},{},{},{},{}", 
+                record.name,record.address,record.age,record.armed,record.cause,record.city,record.state,
+                record.day,record.month,record.year,record.race,record.sex)
+        }
+    } else {
+        for record in records {
+            println!("{}, {}yo {} {} in {}, {}", record.name, record.age, record.race, record.sex, record.city, record.state)
+        }
     }
 
 }
